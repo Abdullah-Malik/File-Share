@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="{% url 'Posts-search' %}"  class="form-inline justify-content-center" method="GET">
+    
+    <form action="{% url 'post_search' %}"  class="form-inline justify-content-center" method="GET">
         <input class="form-control mr-sm-2" value="{{ request.GET.q }}" type="text" aria-label="Search" name="q">
         <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -13,7 +14,7 @@
             <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
 
-            <h1><a class="article-title" href="{% url 'post-detail' post.id %}">{{post.title}}</a></h1>
+            <h1><a class="article-title" href="{% url 'post_detail' post.id %}">{{post.title}}</a></h1>
             <p class="text-justify" class="article-content">{{post.description}}</p>    
             <div class="col-md-4 px-0">
             <img class="img-fluid" src="{{ post.thumbnail_image.url }}">
@@ -26,12 +27,12 @@
             {% if post.owner == user %}
                 <div class="container my-3">
                 <div class="col-md-12 text-center">
-                    <a class="btn btn-primary btn-md" href="{% url 'post-update' post.id %}" >Update</a>
+                    <a class="btn btn-primary btn-md" href="{% url 'post_update' post.id %}" >Update</a>
                 </div>
                 </div>
                 <div class="container my-3">
                 <div class="col-md-12 text-center">
-                    <a class="btn btn-success btn-md" href="{% url 'post-delete' post.id %}" >Delete</a>
+                    <a class="btn btn-success btn-md" href="{% url 'post_delete' post.id %}" >Delete</a>
                 </div>
                 </div>
             {% endif %}

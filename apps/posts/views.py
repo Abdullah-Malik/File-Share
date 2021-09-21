@@ -128,7 +128,7 @@ class PostDetailFormView(SingleObjectMixin, FormView):
             reverse: returns actual url against the url name provided as
             the first argument
         """
-        return reverse("post-detail", kwargs={"pk": self.object.pk})
+        return reverse("post_detail", kwargs={"pk": self.object.pk})
 
 
 class PostDetailView(View):
@@ -166,7 +166,7 @@ class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Post
     template_name = "posts/post_create.html"
     form_class = PostsForm
-    success_url = reverse_lazy('post-dashboard')
+    success_url = reverse_lazy('post_dashboard')
     success_message = "%(title)s Post was created successfully"
 
     def form_valid(self, form):

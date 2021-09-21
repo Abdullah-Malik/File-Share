@@ -56,7 +56,7 @@ class Comment(models.Model):
     Comment model stores information regarding comments under the posts
     """
 
-    comment = models.TextField()
+    comment_text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     #related name 

@@ -9,7 +9,7 @@
           <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
         </div>
 
-        <h1><a class="article-title" href="{% url 'post-detail' post.id %}">{{post.title}}</a></h1>
+        <h1><a class="article-title" href="{% url 'post_detail' post.id %}">{{post.title}}</a></h1>
         <p class="text-justify" class="article-content">{{post.description}}</p>    
         <div class="col-md-4 px-0">
           <img class="img-fluid" src="{{ post.thumbnail_image.url }}">
@@ -22,12 +22,12 @@
         {% if post.owner == user %}
             <div class="container my-3">
               <div class="col-md-12 text-center">
-                  <a class="btn btn-primary btn-md" href="{% url 'post-update' post.id %}" >Update</a>
+                  <a class="btn btn-primary btn-md" href="{% url 'post_update' post.id %}" >Update</a>
               </div>
             </div>
             <div class="container my-3">
               <div class="col-md-12 text-center">
-                  <a class="btn btn-success btn-md" href="{% url 'post-delete' post.id %}" >Delete</a>
+                  <a class="btn btn-success btn-md" href="{% url 'post_delete' post.id %}" >Delete</a>
               </div>
             </div>
         {% endif %}
