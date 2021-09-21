@@ -31,7 +31,7 @@ class PostDashboardView(LoginRequiredMixin, ListView):
     """
     A view where user can view the posts that he is author/owner of
     """
-    template_name = "Posts/dashboard.html"
+    template_name = "dashboard.html"
     context_object_name = "Posts"
     ordering = ["-date_posted"]
 
@@ -49,7 +49,7 @@ class PostListView(ListView):
     by any user
     """
 
-    template_name = "Posts/home.html"
+    template_name = "home.html"
     context_object_name = "Posts"
 
     def get_queryset(self):
@@ -71,7 +71,7 @@ class PostDisplayView(DetailView):
     """
 
     model = Post
-    template_name = "Posts/Posts_detail.html"
+    template_name = "posts/post_detail.html"
 
     def get_context_data(self, *args, **kwargs):
         """
@@ -89,7 +89,7 @@ class PostDetailFormView(SingleObjectMixin, FormView):
     when a POST request is sent
     """
 
-    template_name = "Posts/posts_detail.html"
+    template_name = "posts/post_detail.html"
     form_class = CommentsForm
     model = Post
 
@@ -128,7 +128,7 @@ class PostDetailFormView(SingleObjectMixin, FormView):
             reverse: returns actual url against the url name provided as
             the first argument
         """
-        return reverse("Posts-detail", kwargs={"pk": self.object.pk})
+        return reverse("post-detail", kwargs={"pk": self.object.pk})
 
 
 class PostDetailView(View):
@@ -164,9 +164,9 @@ class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     """
 
     model = Post
-    template_name = "Posts/Posts_create.html"
+    template_name = "posts/post_create.html"
     form_class = PostsForm
-    success_url = reverse_lazy('Posts-dashboard')
+    success_url = reverse_lazy('post-dashboard')
     success_message = "%(title)s Post was created successfully"
 
     def form_valid(self, form):
@@ -188,7 +188,7 @@ class PostUpdateView(
     """
 
     model = Post
-    template_name = "Posts/Posts_create.html"
+    template_name = "posts/post_update.html"
     form_class = PostsForm
     success_url = "/dashboard/"
     success_message = "%(title)s Post was updated successfully"
@@ -225,7 +225,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     model = Post
     success_url = "/"
-    template_name = "Posts/Posts_delete.html"
+    template_name = "posts/post_delete.html"
 
     def test_func(self):
         """
@@ -263,5 +263,5 @@ class PostSearchView(TitleSearchMixin, ListView):
     """
 
     model = Post
-    template_name = "Posts/Posts_search.html"
+    template_name = "posts/post_search.html"
     context_object_name = "Posts"

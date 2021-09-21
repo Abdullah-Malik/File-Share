@@ -27,19 +27,19 @@
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-color navbar-dark py-4 fixed-top">
         <div class="container">
-          <a href="{% url 'Posts-home' %}" class="navbar-brand">FileShare</a>
+          <a href="{% url 'post-home' %}" class="navbar-brand">FileShare</a>
 
           <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ml-auto">
               {% if user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'Posts-dashboard' %}">Dashboard</a>
+                  <a class="nav-link" href="{% url 'post-dashboard' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'profile' user.username %}">Profile</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'Posts-create' %}">New Post</a>
+                  <a class="nav-link" href="{% url 'post-create' %}">New Post</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -69,7 +69,7 @@
               <p class="lead my-4">
                 FileShare is a free search engine which allows you to search, preview and download millions of files into your devices
               </p>
-              <form action="{% url 'Posts-search' %}" class="form-inline justify-content-center" method="GET">
+              <form action="{% url 'post-search' %}" class="form-inline justify-content-center" method="GET">
                   <input class="form-control mr-sm-2" type="text" aria-label="Search" name="q">
                   <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
               </form>

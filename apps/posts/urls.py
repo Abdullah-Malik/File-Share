@@ -14,23 +14,23 @@ from .views import (
 )
 
 urlpatterns = [
-    path("", PostListView.as_view(), name="Posts-home"),
+    path("", PostListView.as_view(), name="post-home"),
     path(
         "dashboard/",
         PostDashboardView.as_view(),
-        name="Posts-dashboard",
+        name="post-dashboard",
     ),
-    path("search/", PostSearchView.as_view(), name="Posts-search"),
-    path("file/<int:pk>/", PostDetailView.as_view(), name="Posts-detail"),
+    path("search/", PostSearchView.as_view(), name="post-search"),
+    path("file/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
     path(
         "file/<int:pk>/update/",
         PostUpdateView.as_view(),
-        name="Posts-update",
+        name="post-update",
     ),
     path(
         "file/<int:pk>/delete/",
         PostDeleteView.as_view(),
-        name="Posts-delete",
+        name="post-delete",
     ),
-    path("file/new/", PostCreateView.as_view(), name="Posts-create"),
+    path("file/new/", PostCreateView.as_view(), name="post-create"),
 ]

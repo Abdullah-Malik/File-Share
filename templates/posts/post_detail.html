@@ -10,7 +10,7 @@
           <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         </div>
 
-        <h1><a class="article-title" href="{% url 'Posts-detail' object.id %}">{{object.title}}</a></h1>
+        <h1><a class="article-title" href="{% url 'post-detail' object.id %}">{{object.title}}</a></h1>
         <p class="text-justify" class="article-content">{{object.description}}</p>    
         <div class="col-md-4 px-0">
           <img class="img-fluid" src="{{ object.thumbnail_image.url }}">
@@ -23,12 +23,12 @@
         {% if object.owner == user %}
             <div class="container my-3">
               <div class="col-md-12 text-center">
-                  <a class="btn btn-primary btn-md" href="{% url 'Posts-update' object.id %}" >Update</a>
+                  <a class="btn btn-primary btn-md" href="{% url 'post-update' object.id %}" >Update</a>
               </div>
             </div>
             <div class="container my-3">
               <div class="col-md-12 text-center">
-                  <a class="btn btn-success btn-md" href="{% url 'Posts-delete' object.id %}" >Delete</a>
+                  <a class="btn btn-success btn-md" href="{% url 'post-delete' object.id %}" >Delete</a>
               </div>
             </div>
         {% endif %}
