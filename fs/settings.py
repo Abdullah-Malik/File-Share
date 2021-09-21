@@ -14,8 +14,10 @@ import os
 import sys
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+PROJECT_ROOT = os.path.dirname(__file__)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,8 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users.apps.UsersConfig",
-    "posts.apps.PostsConfig",
+    "apps.users",
+    "apps.posts",
     "crispy_forms",
     "django_social_share",
     "fontawesome_free",
