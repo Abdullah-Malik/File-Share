@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'Posts/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-social.css' %}">
+    <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
+
+
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-color navbar-dark py-4 fixed-top">
+        <div class="container">
+          <a href="{% url 'Posts-home' %}" class="navbar-brand">FileShare</a>
+
+          <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Posts-dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profile' user.username %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Posts-create' %}">New Post</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                </li>
+              {% endif %}
+              <li class="nav-item">
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    {% if request.path == '/' %}
+      <section class="section-color text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between">
+            <div>
+              <h1><span class="text-warning"> Share Files Seamlessly </span></h1>
+              <p class="lead my-4">
+                FileShare is a free search engine which allows you to search, preview and download millions of files into your devices
+              </p>
+              <form action="{% url 'Posts-search' %}" class="form-inline justify-content-center" method="GET">
+                  <input class="form-control mr-sm-2" type="text" aria-label="Search" name="q">
+                  <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+            <img
+              class="img-fluid w-50 d-none d-sm-block"
+              src="{% static 'fileshare.svg' %}"
+              alt=""
+            />
+          </div>
+        </div>
+      </section>
+    {% endif %}
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="my-container">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

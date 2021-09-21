@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+  {% for post in Posts %}
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ post.owner.image.url }}">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ post.owner.username }}</a>
+          <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+
+        <h1><a class="article-title" href="{% url 'Posts-detail' post.id %}">{{post.title}}</a></h1>
+        <p class="text-justify" class="article-content">{{post.description}}</p>    
+        <div class="col-md-4 px-0">
+          <img class="img-fluid" src="{{ post.thumbnail_image.url }}">
+        </div>
+        <div class="container my-3">
+          <div class="col-md-12 text-center">
+            <a class="btn btn-danger btn-md" href="{{ post.uploaded_file.url }}">Download</a>
+          </div>
+        </div>  
+        {% if post.owner == user %}
+            <div class="container my-3">
+              <div class="col-md-12 text-center">
+                  <a class="btn btn-primary btn-md" href="{% url 'Posts-update' post.id %}" >Update</a>
+              </div>
+            </div>
+            <div class="container my-3">
+              <div class="col-md-12 text-center">
+                  <a class="btn btn-success btn-md" href="{% url 'Posts-delete' post.id %}" >Delete</a>
+              </div>
+            </div>
+        {% endif %}
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}

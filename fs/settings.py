@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users.apps.UsersConfig",
-    #"posts.apps.PostsConfig",
+    "posts.apps.PostsConfig",
     "crispy_forms",
     "django_social_share",
     "fontawesome_free",

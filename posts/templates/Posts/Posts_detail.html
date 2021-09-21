@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load social_share %}
+{% block content %}
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ object.owner.image.url }}">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ object.owner.username }}</a>
+          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        </div>
+
+        <h1><a class="article-title" href="{% url 'Posts-detail' object.id %}">{{object.title}}</a></h1>
+        <p class="text-justify" class="article-content">{{object.description}}</p>    
+        <div class="col-md-4 px-0">
+          <img class="img-fluid" src="{{ object.thumbnail_image.url }}">
+        </div>
+        <div class="container my-3">
+          <div class="col-md-12 text-center">
+            <a class="btn btn-danger btn-md" href="{{ object.uploaded_file.url }}">Download</a>
+          </div>
+        </div>  
+        {% if object.owner == user %}
+            <div class="container my-3">
+              <div class="col-md-12 text-center">
+                  <a class="btn btn-primary btn-md" href="{% url 'Posts-update' object.id %}" >Update</a>
+              </div>
+            </div>
+            <div class="container my-3">
+              <div class="col-md-12 text-center">
+                  <a class="btn btn-success btn-md" href="{% url 'Posts-delete' object.id %}" >Delete</a>
+              </div>
+            </div>
+        {% endif %}
+        <ul class="social-icons btn-lg "> 
+          <li class="btn btn-social-icon btn-lg btn-facebook "><a href="#" class="fab fa-facebook btn-facebook "></a></li> 
+          <li class="btn btn-social-icon btn-lg btn-twitter"><a href="#" class="fab fa-twitter btn-twitter" ></a></li> 
+        </ul>
+      </div>
+    </article>
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form | crispy }}
+            <input type="submit">
+        </form>
+    </div>
+    <hr>
+    {% for comment in comments %}
+        <div class=" col-md-12 comment">
+            <strong>{{ comment.author.username }}</strong>
+            <div class="date">{{ comment.comment_date_time |date:"F d, Y" }}</div>
+            <p>{{ comment.comment|linebreaks }}</p>
+            <button> Edit </button>
+            <button> Delete </button>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
+{% endblock content %}
