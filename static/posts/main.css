@@ -8,6 +8,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
+.post-img {
+  height: 300px;
+  width: 200px;
+  margin-right: 16px;
+}
+
 .my-h1 {
   margin-top: 20px;
 }
@@ -108,8 +114,15 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
+.post-content
+{
+  margin-right: 15px;
+}
+
 .navbar{
   margin-bottom: 0px !important;
   border: 0 !important;
 }
+
+
 

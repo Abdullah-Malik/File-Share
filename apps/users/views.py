@@ -6,10 +6,12 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
+from django.db.models import Q
 
 from .forms import ProfileCreationForm, ProfileUpdateForm
 from .models import User
+from apps.posts.models import Post
 
 # Create your views here.
 
@@ -36,6 +38,26 @@ def signup(request):
     context = {"form": form}
     return render(request, "users/signup.html", context)
 
+class ProfileDetailView(DetailView):
+    """
+    Views displays information about the user and the posts
+    that he is the author of
+    """
+    model = User
+    template_name = "users/profile.html"
+    context_object_name = "author"
+    slug_field = "username"
+    slug_url_kwarg = "username"
+
+    def get_context_data(self, *args, **kwargs):
+        """
+        Returns the posts that the user is author of 
+        """
+        context = super().get_context_data(*args, **kwargs)
+        context["Posts"] = Post.objects.filter(Q(owner=self.get_object()))
+        #context["my_author"] = User.objects.filter(self.get_object())
+        return context
+
 
 class ProfileUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     """
@@ -44,7 +66,7 @@ class ProfileUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
 
     model = User
     form_class = ProfileUpdateForm
-    template_name = "users/profile.html"
+    template_name = "users/profile_update.html"
     slug_field = "username"
     slug_url_kwarg = "username"
     success_message = "Profile Updated"
@@ -58,7 +80,7 @@ class ProfileUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
             reverse: returns actual url against the url name provided as
             the first argument
         """
-        return reverse("profile", kwargs={"username": self.object.username})
+        return reverse("profile_update", kwargs={"username": self.object.username})
 
     def test_func(self):
         """

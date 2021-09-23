@@ -1,9 +1,10 @@
 """
 Custom Mixins for Posts app
 """
+from django.db.models import Q
 
 
-class TitleSearchMixin:
+class TitleDescriptionSearchMixin:
     """
     Custom Mixin for Searching Posts
     """
@@ -19,6 +20,6 @@ class TitleSearchMixin:
 
         q = self.request.GET.get("q")
         if q:
-            return queryset.filter(title__icontains=q)
+            return queryset.filter(Q(title__icontains=q) | Q(description__icontains=q))
         print(q, queryset)
         return queryset

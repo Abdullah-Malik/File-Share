@@ -31,7 +31,7 @@ class Post(models.Model):
         default="default.jpg", upload_to="thumbnail_images"
     )
     date_posted = models.DateTimeField(default=timezone.now)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='users_post',on_delete=models.CASCADE)
     file_type = models.CharField(max_length=10, choices=CHOICES, default="other")
     is_private = models.BooleanField(default=False)
 
@@ -58,22 +58,5 @@ class Comment(models.Model):
 
     comment_text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    #related name 
-    #select_related 
-    #pre_fetch
-    #post.comment
-    #reverse and reverse_lazy
-    #html extra spaces
-    #index function
-    #git desktop
-    #DJango Rest
-    #cod-md-8 and col-md-4
-    #button width
-    #profile page author
-    #drf (api endpoint) search
-    
-    #improvements
-        #Tokenize Search
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_date_time = models.DateTimeField(editable=False, default=timezone.now)

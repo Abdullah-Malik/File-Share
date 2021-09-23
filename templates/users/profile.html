@@ -1,23 +1,37 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
-    {% if messages %}
-        <div class="alert alert-success">
+{% extends "posts_list.html" %}
+{% load static %}
+{% block top-content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/profile.css' %}"/>
+    <section class="section about-section gray-bg" id="about">
         <div class="container">
-            {% for message in messages %}
-            {{ message }}
-            <br/>
-            {% endfor %}
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color">{{author.username}}</h3>
+                        <div class="row about-list">
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <label>First Name</label>
+                                    <p>{{ author.first_name }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Last Name</label>
+                                    <p>{{ author.last_name }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>E-mail</label>
+                                    <p>{{ author.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <div class="about-avatar">
+                        <img class='rounded-circle' src="{{ author.image.url }}" title="" alt="">
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-    {% endif %}
-    <h1 class="my-h1">Profile</h1>
-    <div>
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form | crispy }}
-            <input type="submit">
-        </form>
-    </div>
-{% endblock content %}
-
+    </section>
+{% endblock %}
