@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponseForbidden
-from django.http.response import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -20,6 +19,7 @@ from django.views.generic import (
     UpdateView,
 )
 from django.views.generic.detail import SingleObjectMixin
+from rest_framework import generics
 
 from .forms import CommentsForm, PostsForm
 from .mixins import TitleDescriptionSearchMixin
@@ -257,3 +257,4 @@ class PostSearchView(TitleDescriptionSearchMixin, ListView):
     model = Post
     template_name = "home.html"
     context_object_name = "Posts"
+

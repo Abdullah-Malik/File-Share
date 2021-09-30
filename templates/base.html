@@ -66,9 +66,9 @@
               <p class="lead my-4">
                 FileShare is a free search engine which allows you to search, preview and download millions of files into your devices
               </p>
-              <form action="{% url 'post_search' %}"  class="form-inline justify-content-center pb-3" method="GET">
-                <input class="form-control mr-sm-2" value="{{ request.GET.q }}" type="text" aria-label="Search" name="q">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+              <form action="{% url 'post_search_api' %}"  class="form-inline justify-content-center pb-3" method="GET">
+                <input class="form-control mr-sm-2" id='q' value="{{ request.GET.q }}" type="text" aria-label="Search" name="q">
+                <button id="search_button" class="btn btn-primary my-2 my-sm-0" type="button">Search</button>
               </form>
             </div>
             <img
@@ -80,12 +80,83 @@
         </div>
       </section>
     {% endif %}
-    <main role="main" class="container pt-4 pb-5">
+
+    <main role="main" class="container pt-4 pb-5" id="my_container" data-url="">
       <div class="row">
         <div class="col-md-12">
             {% block content %}{% endblock %}
         </div>
     </main>
+
+    <script>
+        let fetchBtn = document.getElementById("search_button");
+  
+        fetchBtn.addEventListener("click", buttonclickhandler);
+
+        function buttonclickhandler() {
+  
+          // Instantiate an new XHR Object
+          const xhr = new XMLHttpRequest();
+
+          // Open an obejct (GET/POST, PATH,
+          // ASYN-TRUE/FALSE)
+          let query = document.getElementById("q").value;      
+          console.log(query)
+          let base_url = "http://127.0.0.1:8000"
+          xhr.open("GET", base_url +"/api/search/?q=" + query, true);
+
+          // When response is ready
+          xhr.onload = function () {
+            if (this.status === 200) {
+
+                  // Changing string data into JSON Object
+                  obj = JSON.parse(this.responseText);
+    
+                  // Getting the ul element
+                  let list = document.getElementById("my_container");
+                  
+                  list.innerHTML = `
+                  ${ obj.map(function(post){
+                    return `
+                    <article class="media content-section">
+                      <img class="rounded-circle article-img" src="${ base_url + post.owner.image }">
+                      <div class="media-body">
+                        <div class="article-metadata">
+                          <a class="mr-2" href="${base_url + '/profile/' + post.owner.username }">${ post.owner.username }</a>
+                          <small class="text-muted">${ post.date_posted }</small>
+                        </div>
+                        <h1><a class="article-title" href="${ base_url + '/file/' + post.id }">${post.title}</a></h1>
+                        <div class='row'>
+                          <div class="col-md-8">
+                              <div class='post-content'>
+                                <p class="text-justify" class="article-content">${post.description}</p>   
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class='post-img'>
+                              <img class="img-fluid" src="${ base_url + post.thumbnail_image }">
+                            </div>
+                          </div>
+                        </div>
+                      <div class="btn-toolbar py-3">
+                          <a  class="btn btn-success btn-md px-5 mr-3" href="${ base_url + post.uploaded_file }">Download</a>
+                        </div>
+                      </div>
+                    </article>
+                    `
+                  }
+                  )
+                  }  
+                  `;
+                  console.log(obj)
+              }
+              else {
+                  console.log("File not found");
+              }
+            }
+            xhr.send();
+        }
+    </script>
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

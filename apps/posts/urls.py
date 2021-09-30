@@ -1,7 +1,7 @@
 """
 defines all the urls that Posts app is using
 """
-from django.urls import path
+from django.urls import path, include
 
 from .views import (
     PostCreateView,
@@ -14,6 +14,7 @@ from .views import (
 )
 
 urlpatterns = [
+    
     path("", PostListView.as_view(), name="home"),
     path(
         "dashboard/",
@@ -33,4 +34,5 @@ urlpatterns = [
         name="post_delete",
     ),
     path("file/new/", PostCreateView.as_view(), name="post_create"),
+
 ]
