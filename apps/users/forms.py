@@ -34,8 +34,7 @@ class ProfileCreationForm(UserCreationForm):
 
 class ProfileUpdateForm(ModelForm):
     """
-    ProfileUpdateForm implements the ModelForm and provides a form
-    using which an instance of User Model can be updated
+    ProfileUpdateForm used in the ProfileUpdateView
     """
 
     class Meta:

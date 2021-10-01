@@ -66,7 +66,7 @@
               <p class="lead my-4">
                 FileShare is a free search engine which allows you to search, preview and download millions of files into your devices
               </p>
-              <form action="{% url 'post_search_api' %}"  class="form-inline justify-content-center pb-3" method="GET">
+              <form action="{% url 'post_search' %}"  class="form-inline justify-content-center pb-3" method="GET">
                 <input class="form-control mr-sm-2" id='q' value="{{ request.GET.q }}" type="text" aria-label="Search" name="q">
                 <button id="search_button" class="btn btn-primary my-2 my-sm-0" type="button">Search</button>
               </form>
@@ -119,13 +119,13 @@
                   ${ obj.map(function(post){
                     return `
                     <article class="media content-section">
-                      <img class="rounded-circle article-img" src="${ base_url + post.owner.image }">
+                      <img class="rounded-circle article-img" src="${ post.owner.image }">
                       <div class="media-body">
                         <div class="article-metadata">
-                          <a class="mr-2" href="${base_url + '/profile/' + post.owner.username }">${ post.owner.username }</a>
+                          <a class="mr-2" href="${ post.owner.profile_url }">${ post.owner.username }</a>
                           <small class="text-muted">${ post.date_posted }</small>
                         </div>
-                        <h1><a class="article-title" href="${ base_url + '/file/' + post.id }">${post.title}</a></h1>
+                        <h1><a class="article-title" href="${ post.post_url }">${post.title}</a></h1>
                         <div class='row'>
                           <div class="col-md-8">
                               <div class='post-content'>
@@ -134,12 +134,12 @@
                           </div>
                           <div class="col-md-4">
                             <div class='post-img'>
-                              <img class="img-fluid" src="${ base_url + post.thumbnail_image }">
+                              <img class="img-fluid" src="${ post.thumbnail_image }">
                             </div>
                           </div>
                         </div>
                       <div class="btn-toolbar py-3">
-                          <a  class="btn btn-success btn-md px-5 mr-3" href="${ base_url + post.uploaded_file }">Download</a>
+                          <a  class="btn btn-success btn-md px-5 mr-3" href="${ post.uploaded_file }">Download</a>
                         </div>
                       </div>
                     </article>

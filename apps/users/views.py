@@ -1,17 +1,18 @@
 """
 contains the views of user app
 """
-
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import UpdateView, DetailView
-from django.db.models import Q
+from django.views.generic import DetailView, UpdateView
+
+from apps.posts.models import Post
 
 from .forms import ProfileCreationForm, ProfileUpdateForm
 from .models import User
-from apps.posts.models import Post
 
 # Create your views here.
 
@@ -38,11 +39,13 @@ def signup(request):
     context = {"form": form}
     return render(request, "users/signup.html", context)
 
+
 class ProfileDetailView(DetailView):
     """
     Views displays information about the user and the posts
     that he is the author of
     """
+
     model = User
     template_name = "users/profile.html"
     context_object_name = "author"
@@ -51,11 +54,11 @@ class ProfileDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         """
-        Returns the posts that the user is author of 
+        Returns the posts that the user is author of
         """
         context = super().get_context_data(*args, **kwargs)
         context["Posts"] = Post.objects.filter(Q(owner=self.get_object()))
-        #context["my_author"] = User.objects.filter(self.get_object())
+        # context["my_author"] = User.objects.filter(self.get_object())
         return context
 
 
@@ -97,3 +100,17 @@ class ProfileUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
         if profile == self.request.user:
             return True
         return False
+
+
+def logout_view(request):
+    """
+    Logouts the user
+
+    Parameters:
+        request: A HttpRequest object
+
+    Return:
+        redirects user to Homepage
+    """
+    logout(request)
+    return redirect("home")

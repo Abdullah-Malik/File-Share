@@ -2,8 +2,11 @@
 Description of Serializers in the Posts app
 """
 from rest_framework import serializers
+
+from apps.users.api.serializers import UserSerializer
+
 from ..models import Post
-from apps.users.serializers import UserSerializer
+
 
 class PostSerializer(serializers.ModelSerializer):
     """
@@ -13,13 +16,23 @@ class PostSerializer(serializers.ModelSerializer):
 
     owner = UserSerializer(read_only=True)
     post_url = serializers.HyperlinkedIdentityField(
-        view_name='post_detail',
-        lookup_field='pk'
+        view_name="post_detail", lookup_field="pk"
     )
 
     class Meta:
         """
         Meta information
         """
+
         model = Post
-        fields = ['id','title', 'description', 'uploaded_file', 'thumbnail_image', 'date_posted','owner', 'file_type', 'post_url']
+        fields = [
+            "id",
+            "title",
+            "description",
+            "uploaded_file",
+            "thumbnail_image",
+            "date_posted",
+            "owner",
+            "file_type",
+            "post_url",
+        ]

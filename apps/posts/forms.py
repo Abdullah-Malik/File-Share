@@ -9,9 +9,8 @@ from .models import Comment, Post
 
 class CommentsForm(forms.ModelForm):
     """
-    CommentsForm extends ModelForm class that directly converts
-    model to form and returns a form using which comments can be added
-    to the posts
+    CommentsForm is used in the PostDetailView to allowing users
+    to add comments under posts
     """
 
     class Meta:
@@ -27,8 +26,8 @@ class CommentsForm(forms.ModelForm):
 
 class PostsForm(forms.ModelForm):
     """
-    PostsForm extends ModelForm class that directly converts
-    model to form and returns a form using new posts can be created
+    PostsForm is used in the PostCreateView and PostUpdateView to enable 
+    users to create and update posts
     """
 
     class Meta:

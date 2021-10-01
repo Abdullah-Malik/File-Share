@@ -1,14 +1,11 @@
 """
 Views in the the Posts apps
 """
-from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -19,7 +16,6 @@ from django.views.generic import (
     UpdateView,
 )
 from django.views.generic.detail import SingleObjectMixin
-from rest_framework import generics
 
 from .forms import CommentsForm, PostsForm
 from .mixins import TitleDescriptionSearchMixin
@@ -27,10 +23,12 @@ from .models import Comment, Post
 
 # Create your views here.
 
+
 class PostDashboardView(LoginRequiredMixin, ListView):
     """
     A view where user can view the posts that he is author/owner of
     """
+
     template_name = "dashboard.html"
     context_object_name = "Posts"
     ordering = ["-date_posted"]
@@ -74,13 +72,13 @@ class PostDisplayView(DetailView):
     template_name = "posts/post_detail.html"
     context_object_name = "post"
 
-
     def get_context_data(self, *args, **kwargs):
         """
         Returns the context data to be displayed on the detail page
         """
         context = super().get_context_data(*args, **kwargs)
-        #context["comments"] = Comment.objects.get(post=self.get_object())
+        context["comments"] = Comment.objects.filter(post=self.get_object())
+        print(context["comments"])
         context["form"] = CommentsForm()
         return context
 
@@ -169,7 +167,7 @@ class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Post
     template_name = "posts/post_create.html"
     form_class = PostsForm
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy("dashboard")
     success_message = "%(title)s Post was created successfully"
 
     def form_valid(self, form):
@@ -193,7 +191,7 @@ class PostUpdateView(
     model = Post
     template_name = "posts/post_update.html"
     form_class = PostsForm
-    success_url =  reverse_lazy('dashboard')
+    success_url = reverse_lazy("dashboard")
     success_message = "%(title)s Post was updated successfully"
 
     def test_func(self):
@@ -209,6 +207,7 @@ class PostUpdateView(
             return True
         return False
 
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
     PostDeleteView is a view that displays a confirmation page for
@@ -216,7 +215,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
 
     model = Post
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy("home")
     template_name = "posts/post_delete.html"
 
     def test_func(self):
@@ -233,20 +232,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def logout_view(request):
-    """
-    Logouts the user
-
-    Parameters:
-        request: A HttpRequest object
-
-    Return:
-        redirects user to Homepage
-    """
-    logout(request)
-    return redirect("home")
-
-
 class PostSearchView(TitleDescriptionSearchMixin, ListView):
     """
     PostSearchView extends the ListView and uses the
@@ -257,4 +242,3 @@ class PostSearchView(TitleDescriptionSearchMixin, ListView):
     model = Post
     template_name = "home.html"
     context_object_name = "Posts"
-

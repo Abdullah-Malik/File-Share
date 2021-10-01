@@ -10,19 +10,19 @@ from apps.users.models import User
 
 # Create your models here.
 
-CHOICES = [
-    ("ebook", "Ebook"),
-    ("video", "Video"),
-    ("music", "Music"),
-    ("image", "Image"),
-    ("other", "Other"),
-]
-
 
 class Post(models.Model):
     """
     Post model store information about posts.
     """
+
+    FILE_TYPE_CHOICES = [
+        (1, "Ebook"),
+        (2, "Video"),
+        (3, "Music"),
+        (4, "Image"),
+        (5, "Other"),
+    ]
 
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -31,8 +31,10 @@ class Post(models.Model):
         default="default.jpg", upload_to="thumbnail_images"
     )
     date_posted = models.DateTimeField(default=timezone.now)
-    owner = models.ForeignKey(User, related_name='users_post',on_delete=models.CASCADE)
-    file_type = models.CharField(max_length=10, choices=CHOICES, default="other")
+    owner = models.ForeignKey(User, related_name="users_post", on_delete=models.CASCADE)
+    file_type = models.CharField(
+        max_length=10, choices=FILE_TYPE_CHOICES, default="other"
+    )
     is_private = models.BooleanField(default=False)
 
     def get_absolute_url(self):
