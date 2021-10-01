@@ -23,7 +23,6 @@ class Post(models.Model):
         (4, "Image"),
         (5, "Other"),
     ]
-
     title = models.CharField(max_length=100)
     description = models.TextField()
     uploaded_file = models.FileField(upload_to="uploads/")
