@@ -59,6 +59,6 @@ class Comment(models.Model):
     """
 
     comment_text = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name="comment_author",on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comment_post",on_delete=models.CASCADE)
     comment_date_time = models.DateTimeField(editable=False, default=timezone.now)
